@@ -24,15 +24,17 @@ See [docs/feature-matrix.md](docs/feature-matrix.md) for the verified status of 
 
 ## Install
 
-Download `ScreenQuill-Setup.cmd` from the [latest release](https://github.com/Fleekshot/ScreenQuill/releases/latest) and double-click it. Or run this in PowerShell:
+1. Download **ScreenQuill-Setup.exe** from the [latest release](https://github.com/Fleekshot/ScreenQuill/releases/latest).
+2. Run it and click **Install**.
 
-```powershell
-irm https://raw.githubusercontent.com/Fleekshot/ScreenQuill/main/installer/install.ps1 | iex
-```
+Setup downloads the latest `ScreenQuill-win-x64.zip` from GitHub Releases and checks its SHA-256. It then:
+- installs to `%LOCALAPPDATA%\Programs\ScreenQuill` for your account, with no admin rights needed;
+- adds a Start Menu shortcut, and a desktop shortcut if you tick the box;
+- registers ScreenQuill under **Settings → Apps**, so you can uninstall it there.
 
-The installer downloads the latest release zip from GitHub, checks its SHA-256, installs to `%LOCALAPPDATA%\Programs\ScreenQuill`, adds a Start Menu shortcut and an entry in Settings → Apps (for uninstalling), then starts the app. It needs no administrator rights. Run it again to update.
+Run Setup again to update. For a scripted install, use `ScreenQuill-Setup.exe /silent`.
 
-Windows SmartScreen may warn about the app because it isn't code-signed.
+Setup and the app aren't code-signed, so Windows SmartScreen may show "Windows protected your PC". Click **More info → Run anyway**.
 
 ## Build and run
 
@@ -53,10 +55,13 @@ dotnet test
 To build a self-contained release folder:
 
 ```powershell
-dotnet publish src\ScreenQuill -c Release -r win-x64 --self-contained -o publish
+dotnet publish src\ScreenQuill -c Release -r win-x64 --self-contained -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableCompressionInSingleFile=true -o publish
 ```
 
 Administrator rights are not needed.
+
+To build the installer: `dotnet build installerScreenQuill.Setup -c Release` (output: `installerScreenQuill.SetupinRelease
+et48ScreenQuill-Setup.exe`).
 
 ## Using it
 

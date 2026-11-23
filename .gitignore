@@ -1,0 +1,8 @@
+bin/
+obj/
+publish/
+dist/
+*.user
+.vs/
+# Third-party product screenshots used only as a private design reference; not ours to redistribute.
+Reference images/

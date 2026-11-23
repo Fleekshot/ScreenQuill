@@ -30,7 +30,10 @@ try {
 
     # 2. Verify the checksum published alongside the zip.
     if ($hashAsset) {
-        $expected = ((Invoke-WebRequest $hashAsset.browser_download_url -UseBasicParsing).Content -split '\s+')[0].Trim()
+        # Save to a file: Windows PowerShell 5.1 returns octet-stream .Content as a byte array.
+        $sumFile = Join-Path $tmp 'checksum.txt'
+        Invoke-WebRequest $hashAsset.browser_download_url -OutFile $sumFile -UseBasicParsing
+        $expected = ((Get-Content $sumFile -Raw).Trim() -split '\s+')[0]
         $actual = (Get-FileHash $zip -Algorithm SHA256).Hash
         if ($expected -ne $actual) { throw "Checksum mismatch (expected $expected, got $actual). Download aborted." }
         Write-Host 'Checksum verified.'

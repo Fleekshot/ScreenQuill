@@ -60,8 +60,13 @@ dotnet publish src\ScreenQuill -c Release -r win-x64 --self-contained -p:Publish
 
 Administrator rights are not needed.
 
-To build the installer: `dotnet build installerScreenQuill.Setup -c Release` (output: `installerScreenQuill.SetupinRelease
-et48ScreenQuill-Setup.exe`).
+To build the installer:
+
+```powershell
+dotnet build installer\ScreenQuill.Setup -c Release
+```
+
+The output is `installer\ScreenQuill.Setup\bin\Release\net48\ScreenQuill-Setup.exe`.
 
 ## Using it
 
